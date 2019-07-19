@@ -1,0 +1,30 @@
+{
+  "name": "chrome-tools",
+  "version": "1.0.0",
+  "description": "浏览器插件开发",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+	"chrome-build": "cross-env TARGET=chrome gulp",
+    "opera-build": "cross-env TARGET=opera gulp",
+    "firefox-build": "cross-env TARGET=firefox gulp",
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LKG/chrome-tools.git"
+  },
+  "author": "lkg",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LKG/chrome-tools/issues"
+  },
+  "homepage": "https://github.com/LKG/chrome-tools#readme",
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "webpack": "^4.36.1",
+    "webpack-cli": "^3.3.6"
+  }
+}
