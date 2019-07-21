@@ -146,18 +146,6 @@ function executeScriptToCurrentTab(code){
 	});
 }
 
-// 显示badge
-$('#show_badge').click(() => {
-	chrome.browserAction.setBadgeText({text: 'New'});
-	chrome.browserAction.setBadgeBackgroundColor({color: [255, 0, 0, 255]});
-});
-
-// 隐藏badge
-$('#hide_badge').click(() => {
-	chrome.browserAction.setBadgeText({text: ''});
-	chrome.browserAction.setBadgeBackgroundColor({color: [0, 0, 0, 0]});
-});
-
 // 显示桌面通知
 $('#show_notification').click(e => {
 	chrome.notifications.create(null, {
