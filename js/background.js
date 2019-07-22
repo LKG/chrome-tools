@@ -21,8 +21,7 @@ chrome.contextMenus.create({
 });
 
 // 监听来自content-script的消息
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse)
-{
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 	console.log('收到来自content-script的消息：');
 	console.log(request, sender, sendResponse);
 	sendResponse('我是后台，我已收到你的消息：' + JSON.stringify(request));
@@ -46,8 +45,7 @@ $('#get_popup_title').click(e => {
 
 // 获取当前选项卡ID
 function getCurrentTabId(callback){
-	chrome.tabs.query({active: true, currentWindow: true}, function(tabs)
-	{
+	chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
 		if(callback) callback(tabs.length ? tabs[0].id: null);
 	});
 }
@@ -119,12 +117,10 @@ chrome.webRequest.onBeforeRequest.addListener(details => {
 	if(!showImage && details.type == 'image') return {cancel: true};
 	// 简单的音视频检测
 	// 大部分网站视频的type并不是media，且视频做了防下载处理，所以这里仅仅是为了演示效果，无实际意义
-	if(details.type == 'media') {
-		chrome.notifications.create(null, {
-			type: 'basic',
-			iconUrl: 'img/icon.png',
-			title: '检测到音视频',
-			message: '音视频地址：' + details.url,
-		});
-	}
+	chrome.notifications.create(null, {
+		type: 'basic',
+		iconUrl: 'img/icon.png',
+		title: '检测到音视频',
+		message: '音视频地址：' + details.url,
+	});
 }, {urls: ["<all_urls>"]}, ["blocking"]);
