@@ -119,7 +119,7 @@ chrome.runtime.onConnect.addListener(function(port) {
 		port.onMessage.addListener(function(msg) {
 			console.log('收到长连接消息：', msg);
 			tip('收到长连接消息：' + JSON.stringify(msg));
-			if(msg.question == '你是谁啊？') port.postMessage({answer: '我是你爸！'});
+			if(msg.question == '你是谁啊？') port.postMessage({answer: '我是你快乐的chrome tools 小精灵！'});
 		});
 	}
 });
