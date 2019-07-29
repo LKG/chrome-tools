@@ -6,19 +6,14 @@ document.addEventListener('DOMContentLoaded', function()
 	// 注入自定义JS
 	injectCustomJs();
 	// 给谷歌搜索结果的超链接增加 _target="blank"
-	if(location.host == 'www.google.com.tw')
-	{
+	if(location.host == 'www.google.com.tw'){
 		var objs = document.querySelectorAll('h3.r a');
-		for(var i=0; i<objs.length; i++)
-		{
+		for(var i=0; i<objs.length; i++){
 			objs[i].setAttribute('_target', 'blank');
 		}
 		console.log('已处理谷歌超链接！');
-	}
-	else if(location.host == 'www.baidu.com')
-	{
-		function fuckBaiduAD()
-		{
+	}else if(location.host == 'www.baidu.com'){
+		function fuckBaiduAD(){
 			if(document.getElementById('my_custom_css')) return;
 			var temp = document.createElement('style');
 			temp.id = 'my_custom_css';
@@ -38,16 +33,14 @@ document.addEventListener('DOMContentLoaded', function()
 			interval = setInterval(removeAdByJs, 2000);
 			
 			// 重新搜索时页面不会刷新，但是被注入的style会被移除，所以需要重新执行
-			temp.addEventListener('DOMNodeRemoved', function(e)
-			{
+			temp.addEventListener('DOMNodeRemoved', function(e){
 				console.log('自定义CSS被移除，重新注入！');
 				if(interval) clearInterval(interval);
 				fuckBaiduAD();
 			});
 		}
 		let interval = 0;
-		function removeAdByJs()
-		{
+		function removeAdByJs(){
 			$('[data-tuiguang]').parents('[data-click]').remove();
 		}
 		fuckBaiduAD();
@@ -56,8 +49,7 @@ document.addEventListener('DOMContentLoaded', function()
 	}
 });
 
-function initCustomPanel()
-{
+function initCustomPanel(){
 	var panel = document.createElement('div');
 	panel.className = 'chrome-plugin-demo-panel';
 	panel.innerHTML = `
@@ -74,15 +66,13 @@ function initCustomPanel()
 }
 
 // 向页面注入JS
-function injectCustomJs(jsPath)
-{
+function injectCustomJs(jsPath){
 	jsPath = jsPath || 'js/inject.js';
 	var temp = document.createElement('script');
 	temp.setAttribute('type', 'text/javascript');
 	// 获得的地址类似：chrome-extension://ihcokhadfjfchaeagdoclpnjdiokfakg/js/inject.js
 	temp.src = chrome.extension.getURL(jsPath);
-	temp.onload = function()
-	{
+	temp.onload = function(){
 		// 放在页面不好看，执行完后移除掉
 		this.parentNode.removeChild(this);
 	};
@@ -90,15 +80,13 @@ function injectCustomJs(jsPath)
 }
 
 // 接收来自后台的消息
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse)
-{
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
 	console.log('收到来自 ' + (sender.tab ? "content-script(" + sender.tab.url + ")" : "popup或者background") + ' 的消息：', request);
 	if(request.cmd == 'update_font_size') {
 		var ele = document.createElement('style');
 		ele.innerHTML = `* {font-size: ${request.size}px !important;}`;
 		document.head.appendChild(ele);
-	}
-	else {
+	}else {
 		tip(JSON.stringify(request));
 		sendResponse('我收到你的消息了：'+JSON.stringify(request));
 	}
@@ -124,13 +112,11 @@ chrome.runtime.onConnect.addListener(function(port) {
 	}
 });
 
-window.addEventListener("message", function(e)
-{
+window.addEventListener("message", function(e){
 	console.log('收到消息：', e.data);
 	if(e.data && e.data.cmd == 'invoke') {
 		eval('('+e.data.code+')');
-	}
-	else if(e.data && e.data.cmd == 'message') {
+	}else if(e.data && e.data.cmd == 'message') {
 		tip(e.data.data);
 	}
 }, false);
